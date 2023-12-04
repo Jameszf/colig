@@ -1,34 +1,26 @@
 import * as p5 from 'p5'
-import { Circle, Rectangle, Drawable } from "./drawable"
+import { Circle, Rectangle, Drawable, ANDGate } from "./drawable"
 
 
 function main(p: p5) {
-    let shapes: Drawable[] = []
-
-    function randInt(min: number, max: number): number {
-        return Math.round(Math.random() * (max - min) + min)
-    }
-
-    function addShapes(num: number) {
-        for (let i = 0; i < num; i++) {
-            shapes.push(new Circle(randInt(0, 1250), randInt(0, 700), randInt(5, 80), p.color(10)))
-        }
-    }
+    let ANDs: ANDGate[] = []
 
     p.setup = () => {
-        p.createCanvas(1280, 720)
+        p.createCanvas(800, 600)
+        ANDs.push(new ANDGate(200, 200))
     }
 
     p.draw = () => {
         p.background(220)
-        for (let shape of shapes) {
-            shape.draw(p)
+        for (let el of ANDs) {
+            el.draw(p)
         }
     }
 
-    p.mouseClicked = () => {
-        shapes = []
-        addShapes(100)
+    p.mousePressed = () => {
+        for (let el of ANDs) {
+            console.log(el.onMousePress(p))
+        }
     }
 }
 
