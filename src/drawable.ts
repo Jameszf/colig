@@ -10,15 +10,6 @@ interface Locateable {
     pointCollision(x: number, y: number): boolean
 }
 
-interface ColigElement extends Drawable {
-    widgets: Shape[]
-    onMousePress(p: p5): boolean
-}
-
-interface ColigLogic extends ColigElement {
-    computeOutput(inputs: boolean[]): boolean[]
-}
-
 interface Shape extends Drawable, Locateable {
     x: number
     y: number
@@ -117,33 +108,52 @@ class Line implements Drawable, Locateable {
 }
 
 
-class ANDGate implements ColigElement, ColigLogic {
-    x: number
-    y: number
-    widgets: Shape[]
+abstract class Widget implements Drawable, Locateable {
+    shapes: Shape[]
 
-    constructor(x: number, y: number) {
-        this.widgets = []
-        this.widgets.push(new Rectangle(x, y, 80, 50, "#6f7491"))
-        this.widgets.push(new Circle(x, y + 14, 8, "#3f3f3f"))
-        this.widgets.push(new Circle(x, y + 36, 8, "#3f3f3f"))
-    }
-
-    onMousePress(p: p5): boolean {
-        return this.widgets[1].pointCollision(p.mouseX, p.mouseY) || this.widgets[2].pointCollision(p.mouseX, p.mouseY)
+    constructor(shapes: Shape[]) {
+        this.shapes = shapes
     }
 
     draw(p: p5): void {
-        for (let widget of this.widgets) {
-            widget.draw(p)
+        for (let shape of this.shapes) {
+            shape.draw(p)
         }
     }
 
-    computeOutput(inputs: boolean[]): boolean[] {
-        return [inputs[0] && inputs[1]]
+    pointCollision(x: number, y: number): boolean {
+        let collision: boolean = false
+        for (let shape of this.shapes) {
+            collision ||= shape.pointCollision(x, y)
+        }
+        return collision
+    }
+
+    // Event handling
+    onMouseDown(p: p5): void {}
+    onMouseUp(p: p5): void {}
+    onMousePress(p: p5): void {}
+}
+
+
+class ColigSwitchView extends Widget {
+
+
+    constructor(button: Shape) {
+        super([button])
+    }
+
+    onMouseDown(p: p5) {
+
     }
 }
 
 
+class Testing implements Drawable {
+    draw(p: p5): void {
+    }
 
-export { Circle, Rectangle, Line, Drawable, ANDGate }
+}
+
+
+export { Circle, Rectangle, Line, Drawable, Shape }
