@@ -1,11 +1,16 @@
 
 import * as p5 from "p5"
+import { Shape, Circle } from "./drawable"
 
 
 interface ColigView {
+    drawParams: Object
+    shapes: (Shape | ColigView)[]
+    x: number
+    y: number
     draw(p: p5): void
-    toggleState(newState: number): void
     move(x: number, y: number): void
+    setParams(newParams: Object): void
 }
 
 /*
@@ -19,7 +24,9 @@ class ColigLogic {
     outputLines: number
     outputConnections: LogicalConnection[]
     inputs: boolean[]
+    cachedOutputs: boolean[]
     internalLogic: ColigLogic[]
+
 
     constructor(numOfInputs: number, 
         outputLines: number,
@@ -30,6 +37,7 @@ class ColigLogic {
         this.internalLogic = internalLogic
         this.inputs = Array(numOfInputs).fill(false)
         this.outputLines = outputLines
+        this.cachedOutputs = this.compute()
     }
 
     protected compute(): boolean[] {
@@ -45,6 +53,10 @@ class ColigLogic {
 
     public setInput(inputNumber: number, value: boolean): void {
         this.inputs[inputNumber] = value
+    }
+
+    public getCachedOutputs(): boolean[] {
+        return this.cachedOutputs
     }
 }
 
@@ -91,7 +103,7 @@ class ToggleSwitch extends ColigLogic {
 
 class OutputLight extends ColigLogic {
     constructor() {
-        super(1, 0, [], [])
+        super(1, 1, [], [])
     }
 
     protected override compute(): boolean[] {
@@ -100,9 +112,71 @@ class OutputLight extends ColigLogic {
 }
 
 
-class ColigElement {
+abstract class ColigElement {
+    name: string
     view: ColigView
     logic: ColigLogic    
 }
 
 
+class SwitchView implements ColigView {
+    x: number 
+    y: number
+    drawParams: Object
+    shapes: (Shape | ColigView)[]
+
+    constructor() {
+        this.drawParams = { lightOn: false }
+        this.shapes = []
+    }
+
+    draw(p: p5): void {
+        throw new Error("Method not implemented.")
+    }
+
+    move(x: number, y: number): void {
+        throw new Error("Method not implemented.")
+    }
+
+    setParams(newParams: Object): void {
+        this.drawParams = newParams
+    }
+}
+
+
+class ToggleButtonView implements ColigView {
+    drawParams: { lightOn: boolean }
+    shapes: Circle[]
+    radius: number
+    x: number 
+    y: number
+
+    constructor(radius: number, x: number, y: number) {
+        this.drawParams = { lightOn: false }
+        this.radius = radius
+        this.x = x
+        this.y = y
+        this.shapes = [new Circle(x + radius, y + radius, radius, "#ffffff")]
+    }
+
+    draw(p: p5): void {
+        if (this.drawParams.lightOn) {
+           this.shapes[0].setColor("#53b252")
+        } else {
+           this.shapes[0].setColor("#b74035")
+        }
+        this.shapes[0].draw(p)
+    }
+
+    move(x: number, y: number): void {
+        this.shapes[0].move(x, y)
+    }
+
+    setParams(newParams: { lightOn: boolean }): void {
+        this.drawParams = newParams
+    }
+
+}
+
+
+export { ToggleButtonView }

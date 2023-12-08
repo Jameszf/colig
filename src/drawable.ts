@@ -13,7 +13,9 @@ interface Locateable {
 interface Shape extends Drawable, Locateable {
     x: number
     y: number
+    color: string
     move(newX: number, newY: number): void
+    setColor(newColor: string): void
 }
 
 class Rectangle implements Shape {
@@ -43,6 +45,10 @@ class Rectangle implements Shape {
 
     pointCollision(x: number, y: number): boolean {
         return x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height
+    }
+
+    setColor(newColor: string): void {
+        this.color = newColor
     }
 }
 
@@ -74,6 +80,10 @@ class Circle implements Shape {
         let dx = this.x - x
         let dy = this.y - y
         return dx * dx + dy * dy < this.radius * this.radius
+    }
+
+    setColor(newColor: string): void {
+        this.color = newColor
     }
 }
 
