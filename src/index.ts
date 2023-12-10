@@ -1,17 +1,19 @@
 import * as p5 from 'p5'
-import { Circle, Rectangle, ToggleButtonView, InputSwitchView, ColigView } from "./views"
+import { ColigWidget } from './widgets/ColigWidget'
+import { ToggleButtonWidget } from './widgets/ToggleButton'
+import { InputSwitchWidget } from './widgets/InputSwitch'
 
 
 function main(p: p5) {
-    const views: ColigView[] = []
+    const views: ColigWidget[] = []
     let state = false
 
 
     p.setup = () => {
         p.createCanvas(800, 600)
-        views.push(new ToggleButtonView({x: 400, y: 400, radius: 25, lightOn: false}))
-        views.push(new InputSwitchView({ x: 400, y: 200, lightOn: false }))
-        views.push(new InputSwitchView({x: 200, y: 200, lightOn: false}))
+        views.push(new ToggleButtonWidget({x: 400, y: 400, radius: 25, lightOn: false}))
+        views.push(new InputSwitchWidget({ x: 400, y: 200, lightOn: false }))
+        views.push(new InputSwitchWidget({x: 200, y: 200, lightOn: false}))
     }
 
     p.draw = () => {
@@ -20,9 +22,10 @@ function main(p: p5) {
     }
 
     p.mousePressed = () => {
-        state = !state
-        views[0].setParams({ lightOn: state })
+        views.forEach((view: ColigWidget) => view.onMouseClick(p))
     }
 }
 
 export const myp5 = new p5(main, document.body);
+
+// TODO: Comment code

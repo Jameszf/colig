@@ -1,0 +1,30 @@
+
+export abstract class ColigWidget {
+    state: Object
+    subWidgets: ColigWidget[]
+
+    public draw(p: p5): void {
+        this.subWidgets.forEach(subWidget => subWidget.draw(p))
+    }
+
+    public isClicked(cx: number, cy: number): boolean {
+        let clicked: boolean = false
+        for (let Widget of this.subWidgets) {
+            clicked ||= Widget.isClicked(cx, cy)
+        }
+        return clicked
+    }
+
+    public setState(newParams: Object): void {
+        this.state = { ...this.state, ...newParams }
+    }
+
+    public onMouseClick(p: p5) {
+        for (let i = this.subWidgets.length - 1; i >= 0; i--) {
+            if (this.subWidgets[i].isClicked(p.mouseX, p.mouseY)) {
+                this.subWidgets[i].onMouseClick(p)
+                break
+            }
+        }
+    }
+}
