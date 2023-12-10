@@ -2,6 +2,8 @@ import * as p5 from 'p5'
 import { ColigWidget } from './widgets/ColigWidget'
 import { ToggleButtonWidget } from './widgets/ToggleButton'
 import { InputSwitchWidget } from './widgets/InputSwitch'
+import { AndGateWidget } from './widgets/AndGateWidget'
+import { NotGateWidget } from './widgets/NotGateWidget'
 
 
 function main(p: p5) {
@@ -16,6 +18,8 @@ function main(p: p5) {
         views.push(new ToggleButtonWidget({x: 400, y: 400, radius: 25, lightOn: false}))
         views.push(new InputSwitchWidget({ x: 400, y: 200, lightOn: false }))
         views.push(new InputSwitchWidget({x: 200, y: 200, lightOn: false}))
+        views.push(new AndGateWidget({ x: 500, y: 400 }))
+        views.push(new NotGateWidget({ x: 200, y: 500 }))
     }
 
     p.draw = () => {

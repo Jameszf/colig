@@ -5,6 +5,7 @@ export abstract class ColigWidget {
     state: State
     subWidgets: ColigWidget[]
 
+    // FIXME: Remove this.subWidgets = [] from primitive widgets.
     public draw(p: p5): void {
         this.subWidgets.forEach(subWidget => subWidget.draw(p))
     }
