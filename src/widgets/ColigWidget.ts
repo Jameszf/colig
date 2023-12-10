@@ -19,10 +19,17 @@ export abstract class ColigWidget {
         this.state = { ...this.state, ...newParams }
     }
 
-    public onMouseClick(p: p5) {
+
+    public handleMouseClickEvent(p: p5) {
+        if (this.isClicked(p.mouseX, p.mouseY)) {
+            this.onMouseClick(p)
+        }
+    }
+
+    protected onMouseClick(p: p5) {
         for (let i = this.subWidgets.length - 1; i >= 0; i--) {
             if (this.subWidgets[i].isClicked(p.mouseX, p.mouseY)) {
-                this.subWidgets[i].onMouseClick(p)
+                this.subWidgets[i].handleMouseClickEvent(p)
                 break
             }
         }

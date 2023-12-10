@@ -14,6 +14,7 @@ export class Rectangle extends ColigWidget {
     constructor(state: RectangleParams) {
         super()
         this.state = state
+        this.subWidgets = []
     }
 
     public override draw(p: p5): void {

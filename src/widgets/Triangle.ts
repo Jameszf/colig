@@ -16,6 +16,7 @@ export class Triangle extends ColigWidget {
     constructor(state: TriangleParams) {
         super()
         this.state = state
+        this.subWidgets = []
     }
 
     public override draw(p: p5): void {

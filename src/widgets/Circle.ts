@@ -13,6 +13,7 @@ export class Circle extends ColigWidget{
     constructor(state: CircleParams) {
         super()
         this.state = state
+        this.subWidgets = []
     }
 
     public override draw(p: p5): void {

@@ -22,7 +22,7 @@ function main(p: p5) {
     }
 
     p.mousePressed = () => {
-        views.forEach((view: ColigWidget) => view.onMouseClick(p))
+        views.forEach((view: ColigWidget) => view.handleMouseClickEvent(p))
     }
 }
 
