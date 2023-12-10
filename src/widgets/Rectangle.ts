@@ -20,7 +20,7 @@ export class Rectangle extends ColigWidget {
     public override draw(p: p5): void {
         const { x, y, height, width, color } = this.state
         p.fill(p.color(color))
-        p.rect(x, y, height, width)
+        p.rect(x, y, width, height)
     }
 
     public override isClicked(cx: number, cy: number): boolean {
