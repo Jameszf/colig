@@ -26,7 +26,7 @@ export class ToggleButtonWidget extends ColigWidget {
 
     public override move(newX: number, newY: number): void {
         const [ x2, y2 ] = [ newX + this.state.radius, newY + this.state.radius ]
-        this.setState({ x: x2, y: y2 })
+        this.setState({ x: newX, y: newY })
         this.subWidgets[0].move(x2, y2)
     }
 
