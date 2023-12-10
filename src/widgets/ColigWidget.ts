@@ -18,10 +18,12 @@ export abstract class ColigWidget {
     }
 
     public move(newX: number, newY: number): void {
-        this.setState({x: newX, y: newY})
         for (let subWidget of this.subWidgets) {
-            subWidget.move(newX, newY)
+            const dx = subWidget.getX() - this.state.x
+            const dy = subWidget.getY() - this.state.y
+            subWidget.move(newX + dx, newY + dy)
         }
+        this.setState({x: newX, y: newY})
     }
 
     public setState(newParams: Object): void {

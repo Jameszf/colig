@@ -21,36 +21,22 @@ export class InputSwitchWidget extends ColigWidget {
         super()
         this.state = state
 
+        const { x, y, lightOn } = this.state
+        const [ recLength, btnRadius ] = [ InputSwitchWidget.recLength, InputSwitchWidget.btnRadius ]
+        const padding = (recLength - btnRadius * 2) / 2
         const [ x3, y3 ] = [ 
-            InputSwitchWidget.recLength * 2 / 3, 
-            InputSwitchWidget.recLength / 2 
+            x + InputSwitchWidget.recLength * 3 / 2, 
+            y + InputSwitchWidget.recLength / 2 
         ] // Third triangle point.
 
         this.subWidgets = [
-            new Rectangle({x: 0, y: 0, width: InputSwitchWidget.recLength, height: InputSwitchWidget.recLength, color: "#212121"}),
-            new Triangle({ x: 0, y: 0, x2: 0, y2: InputSwitchWidget.recLength, x3, y3, color: "#929392" }),
-            new Circle({x: 0, y: 0, radius: 10, color: "#ffffff"}),
-            new ToggleButtonWidget({ x: 0, y: 0, radius: InputSwitchWidget.btnRadius, lightOn: state.lightOn })
+            new Rectangle({x, y, width: InputSwitchWidget.recLength, height: InputSwitchWidget.recLength, color: "#212121"}),
+            new Triangle({ x: x + recLength, y, x2: x + recLength, y2: y + InputSwitchWidget.recLength, x3, y3, color: "#929392" }),
+            new Circle({x: x + recLength * 3 / 2, y: y + recLength / 2, radius: 10, color: "#ffffff"}),
+            new ToggleButtonWidget({ x: x + padding, y: y + padding, radius: InputSwitchWidget.btnRadius, lightOn })
         ]
         this.move(state.x, state.y)
     }
-
-    public override move(newX: number, newY: number): void {
-        const [ recLength, btnRadius ] = [ InputSwitchWidget.recLength, InputSwitchWidget.btnRadius ]
-        const padding = (recLength - btnRadius * 2) / 2
-
-        this.subWidgets[0].move(newX, newY)
-        this.subWidgets[1].move(newX + recLength, newY)
-        this.subWidgets[2].move(newX + InputSwitchWidget.recLength * 3 / 2, newY + InputSwitchWidget.recLength / 2 )
-        this.subWidgets[3].move(newX + padding, newY + padding)
-        this.setState({ x: newX, y: newY })
-    }
-
-    /*
-    public override isClicked(cx: number, cy: number): boolean {
-        return this.subWidgets[3].isClicked(cx, cy) // Only care if ToggleButtonWidget is clicked.
-    }
-    */
 
     public override setState(newParams: InputSwitchParams): void {
         this.state = { ...this.state, ...newParams }

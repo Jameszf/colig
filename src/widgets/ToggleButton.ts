@@ -24,20 +24,6 @@ export class ToggleButtonWidget extends ColigWidget {
         })]
     }
 
-    public override move(newX: number, newY: number): void {
-        const [ x2, y2 ] = [ newX + this.state.radius, newY + this.state.radius ]
-        this.setState({ x: newX, y: newY })
-        this.subWidgets[0].move(x2, y2)
-    }
-
-    public override isClicked(cx: number, cy: number): boolean {
-        let clicked: boolean = false
-        for (let Widget of this.subWidgets) {
-            clicked ||= Widget.isClicked(cx, cy)
-        }
-        return clicked
-    }
-
     public override draw(p: p5): void {
         if (this.state.lightOn) {
            this.subWidgets[0].setState({color: "#53b252"})
