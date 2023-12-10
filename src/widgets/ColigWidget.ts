@@ -1,6 +1,8 @@
 
+type State = { x: number, y: number } & Record<string, any> 
+
 export abstract class ColigWidget {
-    state: Object
+    state: State
     subWidgets: ColigWidget[]
 
     public draw(p: p5): void {
@@ -15,10 +17,24 @@ export abstract class ColigWidget {
         return clicked
     }
 
+    public move(newX: number, newY: number): void {
+        this.setState({x: newX, y: newY})
+        for (let subWidget of this.subWidgets) {
+            subWidget.move(newX, newY)
+        }
+    }
+
     public setState(newParams: Object): void {
         this.state = { ...this.state, ...newParams }
     }
 
+    public getX(): number {
+        return this.state.x
+    }
+
+    public getY(): number {
+        return this.state.y
+    }
 
     public handleMouseClickEvent(p: p5) {
         if (this.isClicked(p.mouseX, p.mouseY)) {

@@ -7,7 +7,9 @@ import { InputSwitchWidget } from './widgets/InputSwitch'
 function main(p: p5) {
     const views: ColigWidget[] = []
     let state = false
-
+    let selected: ColigWidget
+    let selectedDx: number
+    let selectedDy: number
 
     p.setup = () => {
         p.createCanvas(800, 600)
@@ -21,7 +23,28 @@ function main(p: p5) {
         views.forEach(shape => shape.draw(p))
     }
 
+    p.mouseReleased = () => {
+        selected = undefined
+        selectedDx = 0
+        selectedDy = 0
+    }
+
+    p.mouseDragged = () => {
+        if (selected != undefined) {
+            selected.move(p.mouseX - selectedDx, p.mouseY - selectedDy)
+        }
+    }
+
     p.mousePressed = () => {
+        for (let view of views) {
+            if (view.isClicked(p.mouseX, p.mouseY)) {
+                selected = view
+                selectedDx = p.mouseX - selected.getX()
+                selectedDy = p.mouseY - selected.getY()
+                break
+            }
+        }
+
         views.forEach((view: ColigWidget) => view.handleMouseClickEvent(p))
     }
 }
