@@ -1,5 +1,6 @@
 import { Circle } from "./Circle"
 import { ColigWidget } from "./ColigWidget"
+import { ConnectorPort } from "./ConnectorPort"
 import { Rectangle } from "./Rectangle"
 import { ToggleButtonWidget } from "./ToggleButton"
 import { Triangle } from "./Triangle"
@@ -32,7 +33,7 @@ export class InputSwitchWidget extends ColigWidget {
         this.subWidgets = [
             new Rectangle({x, y, width: InputSwitchWidget.recLength, height: InputSwitchWidget.recLength, color: "#212121"}),
             new Triangle({ x: x + recLength, y, x2: x + recLength, y2: y + InputSwitchWidget.recLength, x3, y3, color: "#929392" }),
-            new Circle({x: x + recLength * 3 / 2, y: y + recLength / 2, radius: 10, color: "#ffffff"}),
+            new ConnectorPort({ x: x + recLength * 3 / 2, y: y + recLength / 2 }),
             new ToggleButtonWidget({ x: x + padding, y: y + padding, radius: InputSwitchWidget.btnRadius, lightOn })
         ]
         this.move(state.x, state.y)

@@ -2,6 +2,7 @@ import { ColigWidget } from "./ColigWidget"
 import { Rectangle } from "./Rectangle"
 import { Circle } from "./Circle"
 import { Triangle } from "./Triangle"
+import { ConnectorPort } from "./ConnectorPort"
 
 
 export type OutputLightState = {
@@ -25,7 +26,7 @@ export class OutputLight extends ColigWidget {
             new Rectangle({ x, y, width: recLength, height: recLength, color: "#111111" }),
             new Circle({ x: x + btnRadius + padding, y: y + btnRadius + padding, radius: btnRadius, color: "#929392" }),
             new Triangle({ x, y, x2: x, y2: y + recLength, x3: x - recLength / 2, y3: y + recLength / 2, color: "#111111" }),
-            new Circle({ x: x - recLength / 2, y: y + recLength / 2, radius: 10, color: "#dddddd" })
+            new ConnectorPort({ x: x - recLength / 2, y: y + recLength / 2 })
         ]
         this.updateLight()
     }

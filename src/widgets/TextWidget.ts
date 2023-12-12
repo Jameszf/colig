@@ -21,6 +21,7 @@ export class TextWidget extends ColigWidget {
 
     public override draw(p: p5): void {
         p.textSize(this.state.fontSize)
+        p.fill("#545556")
         if (!this.state.width || this.state.height) {
             p.text(this.state.str, this.state.x, this.state.y)
         } else {

@@ -1,5 +1,6 @@
 import { Circle } from "./Circle";
 import { ColigWidget } from "./ColigWidget";
+import { ConnectorPort } from "./ConnectorPort";
 import { Rectangle } from "./Rectangle";
 import { TextWidget } from "./TextWidget";
 
@@ -10,8 +11,8 @@ export type NotGateWidgetState = {
 }
 
 export class NotGateWidget extends ColigWidget {
-    static recWidth = 90
-    static recHeight = 60
+    static recWidth: number = 90
+    static recHeight: number = 60
     state: NotGateWidgetState
 
     constructor(state: NotGateWidgetState) {
@@ -21,8 +22,8 @@ export class NotGateWidget extends ColigWidget {
         const [ recWidth, recHeight ] = [ NotGateWidget.recWidth, NotGateWidget.recHeight ]
         this.subWidgets = [
             new Rectangle({ x, y, width: recWidth, height: recHeight, color: "#111111" }),
-            new Circle({ x, y: y + recHeight / 2, radius: 10, color: "#dddddd" }),
-            new Circle({ x: x + recWidth, y: y + recHeight / 2, radius: 10, color: "#dddddd" }),
+            new ConnectorPort({ x, y: y + recHeight / 2 }),
+            new ConnectorPort({ x: x + recWidth, y: y + recHeight / 2 }),
             new TextWidget({ x: x + 18, y: y + 37, str: "NOT", fontSize: 26 })
         ]
     }
