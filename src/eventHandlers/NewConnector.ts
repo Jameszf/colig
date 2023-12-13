@@ -12,13 +12,17 @@ export class NewConnector extends EventHandler {
         this.widgets = widgets
     }
 
-    onMousePress(p: p5): boolean {
+    private getSubWidget(mx: number, my: number) {
         let subWidget: ColigWidget
         for (let widget of this.widgets) {
-            let res = widget.getWidget(p.mouseX, p.mouseY)
+            let res = widget.getWidget(mx, my)
             if (res != undefined ) subWidget = res
         }
+        return subWidget
+    }
 
+    public override onMousePress(p: p5): boolean {
+        const subWidget = this.getSubWidget(p.mouseX, p.mouseY)
         if (subWidget instanceof ConnectorPort) {
             // Create new LogicalConnector.
             console.log("Create connector!")
@@ -30,7 +34,7 @@ export class NewConnector extends EventHandler {
         return false
     }
 
-    onMouseDrag(p: p5): boolean {
+    public override onMouseDrag(p: p5): boolean {
         if (this.newConnector != undefined) {
             this.newConnector.setState({ x2: p.mouseX, y2: p.mouseY })
             return true
@@ -38,8 +42,14 @@ export class NewConnector extends EventHandler {
         return false
     }
 
-    onMouseRelease(p: p5): boolean {
+    public override onMouseRelease(p: p5): boolean {
+        const subWidget = this.getSubWidget(p.mouseX, p.mouseY)
+        if (subWidget instanceof ConnectorPort) {
+            console.log("Connecting Connector!")
+            this.newConnector.setState({ x2: subWidget.getX(), y2: subWidget.getY() })
+        }
+
         this.newConnector = undefined
-        return false
+        return true
     }
 }
