@@ -6,7 +6,7 @@
  */
 type LogicalConnection = [ColigLogic, number, number]
 
-class ColigLogic {
+export class ColigLogic {
     outputLines: number
     outputConnections: LogicalConnection[]
     inputs: boolean[]
@@ -96,5 +96,3 @@ class OutputLight extends ColigLogic {
         return [this.inputs[0]]
     }
 }
-
-export { ColigLogic }

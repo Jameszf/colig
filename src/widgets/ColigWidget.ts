@@ -39,6 +39,23 @@ export abstract class ColigWidget {
         return this.state.y
     }
 
+    public getWidget(mx: number, my: number): ColigWidget {
+        if (this.isClicked(mx, my)) {
+            if (this.subWidgets == undefined || this.subWidgets.length == 0) {
+                return this
+            } else {
+                let subWidget: ColigWidget
+                for (let widget of this.subWidgets) {
+                    let res = widget.getWidget(mx, my)
+                    if (res) {
+                        subWidget = res
+                    }
+                }
+                return subWidget
+            }
+        }
+    }
+
     public handleMouseClickEvent(p: p5) {
         if (this.isClicked(p.mouseX, p.mouseY)) {
             this.onMouseClick(p)

@@ -5,11 +5,16 @@ import { InputSwitchWidget } from './widgets/InputSwitch'
 import { AndGateWidget } from './widgets/AndGateWidget'
 import { NotGateWidget } from './widgets/NotGateWidget'
 import { OutputLight } from './widgets/OutputLight'
+import { ConnectorPort } from './widgets/ConnectorPort'
+import { LogicalConnector } from './widgets/LogicalConnector'
+import { EventHandler } from './eventHandlers/EventHandler'
+import { DragAndDrop } from './eventHandlers/DragAndDrop'
+import { NewConnector } from './eventHandlers/NewConnector'
 
 
 function main(p: p5) {
     const views: ColigWidget[] = []
-    let state = false
+    const eventHandlers: EventHandler[] = []
     let selected: ColigWidget
     let selectedDx: number
     let selectedDy: number
@@ -21,6 +26,10 @@ function main(p: p5) {
         views.push(new AndGateWidget({ x: 500, y: 400 }))
         views.push(new NotGateWidget({ x: 200, y: 500 }))
         views.push(new OutputLight({ x: 500, y: 500, lightOn: false }))
+
+        eventHandlers.push(new NewConnector(views))
+        eventHandlers.push(new DragAndDrop(views))
+        p.strokeWeight(0)
     }
 
     p.draw = () => {
@@ -29,27 +38,28 @@ function main(p: p5) {
     }
 
     p.mouseReleased = () => {
-        selected = undefined
-        selectedDx = 0
-        selectedDy = 0
-    }
-
-    p.mouseDragged = () => {
-        if (selected != undefined) {
-            selected.move(p.mouseX - selectedDx, p.mouseY - selectedDy)
+        for (let handler of eventHandlers) {
+            if (handler.onMouseRelease(p)) {
+                break
+            }
         }
     }
 
-    p.mousePressed = () => {
-        for (let view of views) {
-            if (view.isClicked(p.mouseX, p.mouseY)) {
-                selected = view
-                selectedDx = p.mouseX - selected.getX()
-                selectedDy = p.mouseY - selected.getY()
+    p.mouseDragged = () => {
+        for (let handler of eventHandlers) {
+            if (handler.onMouseDrag(p)) {
                 break
             }
         }
 
+    }
+
+    p.mousePressed = () => {
+        for (let handler of eventHandlers) {
+            if (handler.onMousePress(p)) {
+                break
+            }
+        }
         views.forEach((view: ColigWidget) => view.handleMouseClickEvent(p))
     }
 }

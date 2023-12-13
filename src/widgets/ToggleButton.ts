@@ -33,6 +33,12 @@ export class ToggleButtonWidget extends ColigWidget {
         this.subWidgets[0].draw(p)
     }
 
+    public override getWidget(mx: number, my: number): ColigWidget {
+        if (this.isClicked(mx, my)) {
+            return this
+        }
+    }
+
     public override onMouseClick(p: p5): void {
         this.setState({ lightOn: !this.state.lightOn })
         if (this.state.callback != undefined) {
