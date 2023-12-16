@@ -51,7 +51,14 @@ function main(p: p5) {
                 break
             }
         }
+    }
 
+    p.mouseMoved = () => {
+        for (let handler of eventHandlers) {
+            if (handler.onMouseMove(p)) {
+                break
+            }
+        }
     }
 
     p.mousePressed = () => {

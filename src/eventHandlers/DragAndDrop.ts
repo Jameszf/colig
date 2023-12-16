@@ -34,6 +34,10 @@ export class DragAndDrop extends EventHandler {
         return false
     }
 
+    public override onMouseMove(p: p5): boolean {
+        return false
+    }
+
     onMouseRelease(p: p5): boolean {
         this.selected = undefined
         this.selectedDx = 0

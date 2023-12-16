@@ -22,8 +22,8 @@ export class NotGateWidget extends ColigWidget {
         const [ recWidth, recHeight ] = [ NotGateWidget.recWidth, NotGateWidget.recHeight ]
         this.subWidgets = [
             new Rectangle({ x, y, width: recWidth, height: recHeight, color: "#111111" }),
-            new ConnectorPort({ x, y: y + recHeight / 2 }),
-            new ConnectorPort({ x: x + recWidth, y: y + recHeight / 2 }),
+            new ConnectorPort({ x, y: y + recHeight / 2, radius: 10 }),
+            new ConnectorPort({ x: x + recWidth, y: y + recHeight / 2, radius: 10 }),
             new TextWidget({ x: x + 18, y: y + 37, str: "NOT", fontSize: 26 })
         ]
     }

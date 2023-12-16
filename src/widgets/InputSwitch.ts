@@ -33,7 +33,7 @@ export class InputSwitchWidget extends ColigWidget {
         this.subWidgets = [
             new Rectangle({x, y, width: InputSwitchWidget.recLength, height: InputSwitchWidget.recLength, color: "#212121"}),
             new Triangle({ x: x + recLength, y, x2: x + recLength, y2: y + InputSwitchWidget.recLength, x3, y3, color: "#929392" }),
-            new ConnectorPort({ x: x + recLength * 3 / 2, y: y + recLength / 2 }),
+            new ConnectorPort({ x: x + recLength * 3 / 2, y: y + recLength / 2, radius: 10 }),
             new ToggleButtonWidget({ x: x + padding, y: y + padding, radius: InputSwitchWidget.btnRadius, lightOn })
         ]
         this.move(state.x, state.y)
