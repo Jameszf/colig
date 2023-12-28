@@ -1,5 +1,6 @@
 import { Circle } from "./Circle"
 import { ColigWidget } from "./ColigWidget"
+import { WidgetFactory } from "./WidgetFactory"
 
 
 export type ToggleButtonParams = {
@@ -16,12 +17,7 @@ export class ToggleButtonWidget extends ColigWidget {
     constructor(state: ToggleButtonParams) {
         super()
         this.state = state
-        this.subWidgets = [new Circle({
-            x: state.x + state.radius, 
-            y: state.y + state.radius, 
-            radius: state.radius, 
-            color: "#ffffff"
-        })]
+        this.subWidgets = [WidgetFactory.Circle(state.x + state.radius, state.y + state.radius, state.radius, "#ffffff")]
     }
 
     public override draw(p: p5): void {

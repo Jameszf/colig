@@ -1,18 +1,18 @@
-import { Circle } from "./Circle";
-import { ColigWidget } from "./ColigWidget";
+import { Circle } from "../widgets/Circle";
+import { ColigWidget } from "../widgets/ColigWidget";
+import { ColigElement } from "./ColigElement";
 import { ConnectorPort } from "./ConnectorPort";
 
 
 export type LogicalConnectorState = {
     x: number,
     y: number,
-    color: string,
     weight: number,
-    startPort: ConnectorPort
-    endPort: ConnectorPort
+    points: [number, number][],
+    isOn: boolean
 }
 
-export class LogicalConnector extends ColigWidget {
+export class LogicalConnector extends ColigElement {
     state: LogicalConnectorState
 
     constructor(state: LogicalConnectorState) {
@@ -22,10 +22,17 @@ export class LogicalConnector extends ColigWidget {
     }
 
     public override draw(p: p5): void {
-        const { startPort, endPort, color, weight } = this.state
-        p.stroke(color)
+        const { weight, points, isOn } = this.state
+        if (isOn) {
+            p.stroke("#ea402a")
+        } else {
+            p.stroke("#3f3b3b")
+        }
         p.strokeWeight(weight)
-        p.line(startPort.getX(), startPort.getY(), endPort.getX(), endPort.getY())
+
+        for (let i = 0; i < points.length - 1; i++) {
+            p.line(points[i][0], points[i][1], points[i + 1][0], points[i + 1][1])
+        }
         p.strokeWeight(0)
     }
 

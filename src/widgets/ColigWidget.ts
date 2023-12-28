@@ -1,6 +1,7 @@
 
 type State = { x: number, y: number } & Record<string, any> 
 
+
 export abstract class ColigWidget {
     state: State
     subWidgets: ColigWidget[]

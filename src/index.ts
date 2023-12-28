@@ -1,15 +1,13 @@
 import * as p5 from 'p5'
 import { ColigWidget } from './widgets/ColigWidget'
 import { ToggleButtonWidget } from './widgets/ToggleButton'
-import { InputSwitchWidget } from './widgets/InputSwitch'
-import { AndGateWidget } from './widgets/AndGateWidget'
-import { NotGateWidget } from './widgets/NotGateWidget'
-import { OutputLight } from './widgets/OutputLight'
-import { ConnectorPort } from './widgets/ConnectorPort'
-import { LogicalConnector } from './widgets/LogicalConnector'
+import { InputSwitchElement } from './elements/InputSwitch'
 import { EventHandler } from './eventHandlers/EventHandler'
 import { DragAndDrop } from './eventHandlers/DragAndDrop'
 import { NewConnector } from './eventHandlers/NewConnector'
+import { AndGateElement } from './elements/AndGate'
+import { NotGateElement } from './elements/NotGate'
+import { OutputLightElement } from './elements/OutputLight'
 
 
 function main(p: p5) {
@@ -21,11 +19,11 @@ function main(p: p5) {
 
     p.setup = () => {
         p.createCanvas(800, 600)
-        views.push(new ToggleButtonWidget({x: 400, y: 400, radius: 25, lightOn: false}))
-        views.push(new InputSwitchWidget({x: 200, y: 200, lightOn: false}))
-        views.push(new AndGateWidget({ x: 500, y: 400 }))
-        views.push(new NotGateWidget({ x: 200, y: 500 }))
-        views.push(new OutputLight({ x: 500, y: 500, lightOn: false }))
+        views.push(new ToggleButtonWidget({ x: 400, y: 400, radius: 25, lightOn: false }))
+        views.push(new InputSwitchElement({ x: 200, y: 200 }))
+        views.push(new AndGateElement({ x: 500, y: 400 }))
+        views.push(new NotGateElement({ x: 200, y: 500 }))
+        views.push(new OutputLightElement({ x: 500, y: 500, lightOn: false }))
 
         eventHandlers.push(new NewConnector(views))
         eventHandlers.push(new DragAndDrop(views))

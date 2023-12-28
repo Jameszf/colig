@@ -1,6 +1,7 @@
+import { ConnectorPort } from "../elements/ConnectorPort";
+import { LogicalConnector } from "../elements/LogicalConnector";
 import { ColigWidget } from "../widgets/ColigWidget";
-import { ConnectorPort } from "../widgets/ConnectorPort";
-import { LogicalConnector } from "../widgets/LogicalConnector";
+import { WidgetFactory } from "../widgets/WidgetFactory";
 import { EventHandler } from "./EventHandler";
 
 
@@ -21,6 +22,10 @@ export class NewConnector extends EventHandler {
             if (res != undefined ) subWidget = res
         }
         return subWidget
+    }
+    
+    private createNewConnector(startPort: ConnectorPort): void {
+        // TODO: Implemenet
     }
 
     public override onMousePress(p: p5): boolean {
@@ -45,32 +50,26 @@ export class NewConnector extends EventHandler {
         return false
     }
 
+    // FIXME: No connection is established if mouse is over another connector and 
+    // user drags the widget.
     public override onMouseRelease(p: p5): boolean {
-        // FIXME: LogicalConnections should not connect to their starting ConnectorPort.
         const subWidget = this.getSubWidget(p.mouseX, p.mouseY)
         if (subWidget == undefined && this.pseudoPort != undefined) {
-            this.pseudoPort.setState({ radius: 10 })
-            this.widgets.push(this.pseudoPort)
-            this.newConnector = undefined
-            this.pseudoPort = undefined
+            const oldPort = this.pseudoPort
+            oldPort.setState({ radius: 10 })
+            this.widgets.push(oldPort)
+            this.createNewConnector(this.pseudoPort)
+            this.pseudoPort.setState({ x: p.mouseX, y: p.mouseY })
             return true
         }
 
         if (subWidget instanceof ConnectorPort) {
             if (this.pseudoPort == undefined && this.portClicked) {
-                this.pseudoPort = new ConnectorPort({ x: p.mouseX, y: p.mouseY, radius: 0 })
-                this.newConnector = new LogicalConnector({ 
-                    x: 0, 
-                    y: 0, 
-                    color: "#111111", 
-                    weight: 12, 
-                    startPort: subWidget, 
-                    endPort: this.pseudoPort
-                })
-                this.widgets.push(this.newConnector)
+                this.createNewConnector(subWidget)
+                this.pseudoPort.setState({ x: p.mouseX, y: p.mouseY })
                 this.portClicked = false
             } else if (this.pseudoPort != undefined) {
-                this.newConnector.setState({ endPort: subWidget })
+                this.newConnector.setState({ port2: subWidget })
                 this.pseudoPort = undefined
                 this.newConnector = undefined
             }
