@@ -1,6 +1,5 @@
 import { Rectangle } from "../widgets/Rectangle"
 import { Triangle } from "../widgets/Triangle"
-import { ConnectorPort } from "./ConnectorPort"
 import { WidgetFactory } from "../widgets/WidgetFactory"
 import { ColigElement } from "./ColigElement"
 import { ColigLogic } from "./ColigLogic"
@@ -61,5 +60,9 @@ export class OutputLightElement extends ColigElement {
             this.subWidgets[1].setState({color: "#b74035"})
         }
         super.draw(p)
+    }
+
+    public isPort(x: number, y: number): boolean {
+        return this.subWidgets[3].isClicked(x, y)
     }
 }

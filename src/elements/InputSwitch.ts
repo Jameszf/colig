@@ -67,4 +67,8 @@ export class InputSwitchElement extends ColigElement {
         }
         super.draw(p)
     }
+
+    public isPort(x: number, y: number): boolean {
+        return this.subWidgets[2].isClicked(x, y)
+    }
 }

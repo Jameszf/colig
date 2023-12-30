@@ -38,4 +38,10 @@ export class AndGateElement extends ColigElement {
         ]
         this.logic = new ANDGate()
     }
+
+    public isPort(x: number, y: number): boolean {
+        return this.subWidgets[1].isClicked(x, y) ||
+            this.subWidgets[2].isClicked(x, y) ||
+            this.subWidgets[3].isClicked(x, y)
+    }
 }

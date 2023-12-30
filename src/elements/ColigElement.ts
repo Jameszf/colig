@@ -2,9 +2,12 @@ import { ColigWidget } from "../widgets/ColigWidget";
 import { ColigLogic } from "./ColigLogic";
 
 
-export class ColigElement extends ColigWidget {
+export abstract class ColigElement extends ColigWidget {
     logic: ColigLogic
-    getLogic(): ColigLogic {
+
+    public getLogic(): ColigLogic {
         return this.logic
     }
+
+    public abstract isPort(x: number, y :number): boolean
 }

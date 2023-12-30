@@ -40,4 +40,8 @@ export class NotGateElement extends ColigElement {
             new TextWidget({ x: x + 18, y: y + 37, str: "NOT", fontSize: 26 })
         ]
     }
+
+    public isPort(x: number, y: number): boolean {
+        return this.subWidgets[1].isClicked(x, y) || this.subWidgets[2].isClicked(x, y)
+    }
 }
