@@ -1,6 +1,5 @@
 import * as p5 from 'p5'
 import { ColigWidget } from './widgets/ColigWidget'
-import { ToggleButtonWidget } from './widgets/ToggleButton'
 import { InputSwitchElement } from './elements/InputSwitch'
 import { EventHandler } from './eventHandlers/EventHandler'
 import { DragAndDrop } from './eventHandlers/DragAndDrop'
@@ -8,31 +7,29 @@ import { NewConnector } from './eventHandlers/NewConnector'
 import { AndGateElement } from './elements/AndGate'
 import { NotGateElement } from './elements/NotGate'
 import { OutputLightElement } from './elements/OutputLight'
+import { ToggleSwitchHandler } from './eventHandlers/ToggleSwitchHandler'
 
 
 function main(p: p5) {
-    const views: ColigWidget[] = []
+    const widgets: ColigWidget[] = []
     const eventHandlers: EventHandler[] = []
-    let selected: ColigWidget
-    let selectedDx: number
-    let selectedDy: number
 
     p.setup = () => {
         p.createCanvas(800, 600)
-        views.push(new ToggleButtonWidget({ x: 400, y: 400, radius: 25, lightOn: false }))
-        views.push(new InputSwitchElement({ x: 200, y: 200 }))
-        views.push(new AndGateElement({ x: 500, y: 400 }))
-        views.push(new NotGateElement({ x: 200, y: 500 }))
-        views.push(new OutputLightElement({ x: 500, y: 500, lightOn: false }))
+        widgets.push(new InputSwitchElement({ x: 200, y: 200 }))
+        widgets.push(new AndGateElement({ x: 500, y: 400 }))
+        widgets.push(new NotGateElement({ x: 200, y: 500 }))
+        widgets.push(new OutputLightElement({ x: 500, y: 500, lightOn: false }))
 
-        eventHandlers.push(new NewConnector(views))
-        eventHandlers.push(new DragAndDrop(views))
+        eventHandlers.push(new ToggleSwitchHandler(widgets))
+        eventHandlers.push(new NewConnector(widgets))
+        eventHandlers.push(new DragAndDrop(widgets))
         p.strokeWeight(0)
     }
 
     p.draw = () => {
         p.background(220)
-        views.forEach(shape => shape.draw(p))
+        widgets.forEach(shape => shape.draw(p))
     }
 
     p.mouseReleased = () => {
@@ -65,7 +62,7 @@ function main(p: p5) {
                 break
             }
         }
-        views.forEach((view: ColigWidget) => view.handleMouseClickEvent(p))
+        widgets.forEach((view: ColigWidget) => view.handleMouseClickEvent(p))
     }
 }
 

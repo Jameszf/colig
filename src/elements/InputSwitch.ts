@@ -1,5 +1,4 @@
 import { Rectangle } from "../widgets/Rectangle"
-import { ToggleButtonWidget } from "../widgets/ToggleButton"
 import { Triangle } from "../widgets/Triangle"
 import { WidgetFactory } from "../widgets/WidgetFactory"
 import { ColigElement } from "./ColigElement"
@@ -70,5 +69,9 @@ export class InputSwitchElement extends ColigElement {
 
     public isPort(x: number, y: number): boolean {
         return this.subWidgets[2].isClicked(x, y)
+    }
+
+    public isToggled(mx: number, my: number): boolean {
+        return this.subWidgets[3].isClicked(mx, my)
     }
 }
